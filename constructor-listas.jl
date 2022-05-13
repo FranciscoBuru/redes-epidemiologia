@@ -2,7 +2,7 @@ include("sis.jl")
 include("sir.jl")
 
 
-function construyeListaNodos(N::Int64, mu::Float64, beta::Float64, r::Float64, eta::Float64, tipo::String="SIS", proba::Float64=0.1, seed::Int64=1)
+function construyeListaNodos(N::Int64, mu::Float64, beta::Float64, r::Float64, eta::Float64, w::Float64, tipo::String="SIS", proba::Float64=0.1, seed::Int64=1)
     rng = MersenneTwister(seed)
     seeds=sample(rng, Vector(1:1000), N)
     if tipo == "SIS"
@@ -23,7 +23,7 @@ function construyeListaNodos(N::Int64, mu::Float64, beta::Float64, r::Float64, e
             if rand(in_rng,Float64) < proba
                 infectado = 1
             end
-            arre[j] = NodoSIR(1-infectado, infectado, 0.0, mu, beta, r, eta)
+            arre[j] = NodoSIR(1-infectado, infectado, 0.0, mu, beta, r, eta, w)
         end
     end
     return arre
