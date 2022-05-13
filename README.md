@@ -18,7 +18,7 @@ el siguiente [Link](https://juliagraphs.org/Graphs.jl/stable/generators/#All-Gen
 
 # Datos
 
-Hay grafos de muchas cosas disponibles en el siguiente [Link](`https://snap.stanford.edu/data/index.html`)
+Hay grafos de muchas cosas disponibles en el siguiente [Link](https://snap.stanford.edu/data/index.html)
 
 
 # Importante:
