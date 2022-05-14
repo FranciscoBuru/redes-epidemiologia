@@ -16,7 +16,6 @@ y con que topología.
 En el modelo SIR todos los nodos se inicializan con 0.0 en la probabilidad de
 estár recuperado.
 
-
 # Generado de grafos
 Usamos la librería `Graphs` para generar las topologías a evaluar. Creamos
 3 métodos que facilitan la obtención de los grafos generados. Cada
