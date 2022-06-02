@@ -1,0 +1,7 @@
+setup.py
+hitAndRun/__init__.py
+hitAndRun/hitAndRun.py
+hitAndRun.egg-info/PKG-INFO
+hitAndRun.egg-info/SOURCES.txt
+hitAndRun.egg-info/dependency_links.txt
+hitAndRun.egg-info/top_level.txt
