@@ -4,6 +4,17 @@ using GraphPlot
 include("constructor-listas.jl")
 include("topologias.jl")
 
+function corre_modelo(modelo::Modelo, datos::Array{Float64,2}, epocas::Integer)
+    arre = zeros(Float64, epocas,4)
+    difs = zeros(Float64, epocas)
+    for i in 1:epocas
+        modelo = etapa(modelo, i)
+        arre[i,:] = valoresActuales(modelo)
+        difs[i] = abs(sum(datos[i,:] .- valoresActuales(modelo)))
+    end
+    #println(probas(modelo))
+    return sum(difs), arre
+end
 
 function corre_modelo(modelo::Modelo)
     for i in 1:epocas
@@ -11,6 +22,15 @@ function corre_modelo(modelo::Modelo)
     end
     println(probas(modelo))
     return modelo
+end
+
+function grafo_mexico(A::Array{Float64,2}, epocas::Int64, data::Array{Float64,2}, mu::Float64, beta::Array{Float64,1}, eta::Float64, precip::Array{Float64,2})
+    grafo = mexico()
+    #display(gplot(grafo))
+    nodos = construyeListaNodos(A, mu, beta, eta, precip)
+    modelo = SISAjustado(grafo,nodos)
+    diff, arre = corre_modelo(modelo, data, epocas)
+    return diff, arre
 end
 
 #No determinístico

@@ -15,3 +15,7 @@ end
 function barabasi(N::Int64=20, n0::Int64=2, k::Int64=2, seed::Int64=1)
     return barabasi_albert(N, n0, k, seed = seed)
 end
+
+function mexico()
+    return SimpleGraph([0 0 1 1; 0 0 1 0; 1 1 0 1; 1 0 1 0])
+end
