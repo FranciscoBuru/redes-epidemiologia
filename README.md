@@ -50,3 +50,29 @@ determinístico con la seed puesta. Ejemplo:
  ```
  Output = false
  ```
+
+ # Compilar e instalar módulo de python local
+
+ Para general los puntos de HitandRun usamos el paquete de python mhar. Pero estamos en julia entonces debemos correr python y meter el output a julia. Para correr python en julia debemos instalar el paquete PyCall. Ya con Pycall podemos llamar a nuestro módulo.
+
+ Para instalar nuestro módulo globalmente primero debemos instalar las dos dependencias que usa:
+```
+pip install mhar
+```
+```
+pip install numpy
+```
+
+ Y luego hay que ir al directorio general del código de python y correr:
+
+ ```
+python hitAndRun.py install
+ ```
+ o
+ ```
+pip3 install -e hitAndRun
+ ```
+
+ con eso podremos importar nuestro nuevo paquete. Con lo anterior podemos traer datos desde python pero cuidado, tarda un rato.
+
+ Nota: El paquete está hardoceado para generar los puntos en el hipercubo de 12 dimensiones con restricciones >0 y <1 en todas las dimensiones.
