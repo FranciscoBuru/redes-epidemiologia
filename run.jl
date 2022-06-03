@@ -52,12 +52,13 @@ precip = [0.24940130 0.13479302 0.15121451 0.18918919 0.64762231 0.80465275 0.76
 #yy = data[1:51]
 #plot(1:51,yy, legend = false)
 
-writedlm("200k", M)
+#writedlm("200k", M)
 
 
-puntos = 200000
+puntos = 1000000
 arre = ones(puntos)
 M = hit_and_run(puntos)
+M = readdlm("1M")
 for q in 1:puntos
     A = [M[q,1] 0 M[q,2] M[q,3]; 0 M[q,4] M[q,5] 0; M[q,6] M[q,7] M[q,8] M[q,9]; M[q,10] 0 M[q,11] M[q,12]]
     A = convert(Array{Float64,2}, A)
@@ -67,7 +68,7 @@ end
 findmin(arre)
 min = findmin(arre)[2]
 print(M[min,:])
-writedlm("min200k", M[min,:])
+writedlm("min1Mmax", M[min,:])
 
 nuevos = M[min,:]
 
@@ -101,18 +102,6 @@ yy = data[3*floor(Int, length(data)/4)+1:3*floor(Int, length(data)/4 +1)+(epocas
 p4=plot!(x, yy,title = "Veracruz", legend = false)
 
 plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
-
-# Heatmap, necesita ser de 2 variables cambiando
-
-arre = reshape(arre, quality,quality)
-heatmap(1:size(arre,1),
-    1:size(arre,2), arre,
-    c=cgrad([:blue, :white,:red, :yellow]),
-    xlabel="x values", ylabel="y values",
-    title="My title")
-
-
-
 
 
 

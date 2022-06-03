@@ -33,9 +33,8 @@ end
 function construyeListaNodos(A::Array{Float64,2}, mu::Float64, beta::Array{Float64,2}, eta::Float64, precip::Array{Float64,2})
     arre = Array{NodoSISAjustado}(undef, 4)
     for j in 1:4
-        if j == 1
+        if j == 4
             arre[j] = NodoSISAjustado(1, 0, mu, beta[j,:], A[j,:], eta, precip[j,:])
-            print(beta[j,:])
         else
             arre[j] = NodoSISAjustado(1-0.00000042, 0.00000042, mu, beta[j,:], A[j,:], eta, precip[j,:])
         end
