@@ -4,6 +4,11 @@ using GraphPlot
 include("constructor-listas.jl")
 include("topologias.jl")
 
+
+function modelo_mexico(puntos::Integer)
+
+end
+
 function corre_modelo(modelo::Modelo, datos::Array{Float64,2}, epocas::Integer)
     arre = zeros(Float64, epocas,4)
     difs = zeros(Float64, epocas)
@@ -24,7 +29,7 @@ function corre_modelo(modelo::Modelo)
     return modelo
 end
 
-function grafo_mexico(A::Array{Float64,2}, epocas::Int64, data::Array{Float64,2}, mu::Float64, beta::Array{Float64,1}, eta::Float64, precip::Array{Float64,2})
+function grafo_mexico(A::Array{Float64,2}, epocas::Int64, data::Array{Float64,2}, mu::Float64, beta::Array{Float64,2}, eta::Float64, precip::Array{Float64,2})
     grafo = mexico()
     #display(gplot(grafo))
     nodos = construyeListaNodos(A, mu, beta, eta, precip)

@@ -12,4 +12,4 @@ function hit_and_run(puntos::Integer = 2)
   return py"puntos"(puntos)
 end
 
-print(hit_and_run(45))
+#print(hit_and_run(45))

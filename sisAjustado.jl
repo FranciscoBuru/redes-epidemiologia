@@ -7,7 +7,7 @@ mutable struct NodoSISAjustado
     s::Float64      #Proba de estar suceptible
     i::Float64      #Proba de estar infectaod
     mu::Float64     #Proba de recuperación
-    beta::Float64   #Proba por contacto con vecino
+    beta::Array{Float64,1}   #Proba por contacto con vecino
     r::Array{Float64,1}      #Proba de contacto con vecino
     eta::Float64    #Proba de no contagio por interacción con todos los vecinos
     precip::Array{Float64,1} #Precipitacion.
@@ -15,11 +15,11 @@ mutable struct NodoSISAjustado
     iaux::Float64   #Auxilliar de proba de infectado
     saux::Float64   #Auxiliar de proba de suceptible
 
-    function NodoSISAjustado(s::Float64, i::Float64, mu::Float64, beta::Float64,r::Array{Float64,1}, eta::Float64, precip::Array{Float64,1})
+    function NodoSISAjustado(s::Float64, i::Float64, mu::Float64, beta::Array{Float64,1},r::Array{Float64,1}, eta::Float64, precip::Array{Float64,1})
         return new(s,i,mu,beta,r,eta,precip,0,0)
     end
 
-    function NodoSISAjustado(s::Int64, i::Int64, mu::Float64, beta::Float64,r::Array{Float64,1}, eta::Float64, precip::Array{Float64,1})
+    function NodoSISAjustado(s::Int64, i::Int64, mu::Float64, beta::Array{Float64,1},r::Array{Float64,1}, eta::Float64, precip::Array{Float64,1})
         return new(s,i,mu,beta,r,eta,precip, 0,0)
     end
 end
@@ -41,7 +41,7 @@ function etapa(mod::SISAjustado, semana::Integer)
         mod.nodos[j].eta = 1
         for jj in 1:N
             if(A[j,jj] == 1 || j==jj)
-                mod.nodos[j].eta = mod.nodos[j].eta*(1-(mod.nodos[j].precip[Int(floor(semana/4.333333)+1)]*mod.nodos[j].r[jj]*mod.nodos[j].beta*mod.nodos[jj].i))
+                mod.nodos[j].eta = mod.nodos[j].eta*(1-(mod.nodos[j].precip[Int(floor(semana/4.333333)+1)]*mod.nodos[j].r[jj]*mod.nodos[j].beta[Int(floor(semana/52)+1)]*mod.nodos[jj].i))
             end
         end
     end
