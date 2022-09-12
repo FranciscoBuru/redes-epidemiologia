@@ -1,5 +1,5 @@
-#Pkg.add(PackageSpec(name="PyCall", rev="master"))
-#Pkg.build("PyCall")
+Pkg.add(PackageSpec(name="PyCall", rev="master"))
+Pkg.build("PyCall")
 using PyCall
 
 function hit_and_run(puntos::Integer = 2)

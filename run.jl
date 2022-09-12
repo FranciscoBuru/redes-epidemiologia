@@ -56,10 +56,11 @@ precip = [0.24940130 0.13479302 0.15121451 0.18918919 0.64762231 0.80465275 0.76
 #writedlm("200k", M)
 
 
-puntos = 100000
+puntos = 500000
 arre = ones(puntos)
 M = hit_and_run(puntos)
-M = readdlm("./puntos/100k")
+writedlm("./puntos/500k", M)
+#M = readdlm("./puntos/5k")
 for q in 1:puntos
     A = [M[q,1] 0 M[q,2] M[q,3]; 0 M[q,4] M[q,5] 0; M[q,6] M[q,7] M[q,8] M[q,9]; M[q,10] 0 M[q,11] M[q,12]]
     A = convert(Array{Float64,2}, A)
