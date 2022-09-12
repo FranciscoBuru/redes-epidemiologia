@@ -9,16 +9,45 @@ function modelo_mexico(puntos::Integer)
 
 end
 
-function corre_modelo(modelo::Modelo, datos::Array{Float64,2}, epocas::Integer)
+function corre_modelo(modelo::Modelo, datos::Array{Float64,2}, epocas::Integer, errores::Integer)
     arre = zeros(Float64, epocas,4)
     difs = zeros(Float64, epocas)
-    for i in 1:epocas
-        modelo = etapa(modelo, i)
-        arre[i,:] = valoresActuales(modelo)
-        difs[i] = abs(sum(datos[i,:] .- valoresActuales(modelo)))
+    errInd = zeros(Float64, epocas,4)
+    if errores == 0
+        for i in 1:epocas
+            modelo = etapa(modelo, i)
+            arre[i,:] = valoresActuales(modelo)
+
+            #Error absoluto
+            difs[i] = abs(sum(datos[i,:] .- arre[i,:]))
+
+            #Error porcentual
+            #difs[i] = abs(sum((datos[i,:] .- arre[i,:])./datos[i,:]))
+            #difs[i] = difs[i]/sum(datos[i,:])
+        end
+        difs = replace!(difs, Inf=>10)
+        return sum(difs), arre, difs
+    else
+        for i in 1:epocas
+            modelo = etapa(modelo, i)
+            arre[i,:] = valoresActuales(modelo)
+
+            #Error absoluto
+            difs[i] = abs(sum(datos[i,:] .- arre[i,:]))
+            errInd[i,:] = abs.(datos[i,:] .- valoresActuales(modelo))
+
+            ##Error porcentual
+            ##difs[i] = abs(sum((datos[i,:] .- arre[i,:])./datos[i,:]))
+            ##errInd[i,:] = abs.((datos[i,:] .- valoresActuales(modelo)))
+            ##errInd[i,:] = errInd[i,:]./datos[i,:]
+        end
+        print(errInd)
+        difs = replace!(difs, Inf=>10)
+        errInd = replace!(errInd, Inf=>10)
+        return return sum(difs), errInd, difs
+
     end
-    #println(probas(modelo))
-    return sum(difs), arre
+
 end
 
 function corre_modelo(modelo::Modelo)
@@ -29,13 +58,13 @@ function corre_modelo(modelo::Modelo)
     return modelo
 end
 
-function grafo_mexico(A::Array{Float64,2}, epocas::Int64, data::Array{Float64,2}, mu::Float64, beta::Array{Float64,2}, eta::Float64, precip::Array{Float64,2})
+function grafo_mexico(A::Array{Float64,2}, epocas::Int64, data::Array{Float64,2}, mu::Float64, beta::Array{Float64,2}, eta::Float64, precip::Array{Float64,2}, errores::Integer)
     grafo = mexico()
     #display(gplot(grafo))
     nodos = construyeListaNodos(A, mu, beta, eta, precip)
     modelo = SISAjustado(grafo,nodos)
-    diff, arre = corre_modelo(modelo, data, epocas)
-    return diff, arre
+    diff, arre, arreDifs = corre_modelo(modelo, data, epocas, errores)
+    return diff, arre, arreDifs
 end
 
 #No determinístico
