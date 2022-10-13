@@ -9,9 +9,22 @@ An la liga de arriba está todo para instalar y usar con Atom.
 Modelos SIS y SIR para metapoblaciones representadas por redes.
 
 # Correr modelos.
-En el archivo `run.jl` simplemente hay que definir los parámetros y ejecutar una de las funciones
-escritas más abajo. Los nombres de las funciones dicen que timpo de modelo es
-y con que topología.
+
+Se necesitan una serie de paquetes de julia para poder ejecutar el sistema de modelado. A continuación están los comandos para añadirlos a julia.
+
+`Pkg.add("Random")`
+`Pkg.add("StatsBase")`
+`Pkg.add("GraphPlot")`
+`Pkg.add("Plots")`
+`Pkg.add("DelimitedFiles")`
+`Pkg.add("Compose")`
+`Pkg.add("Cairo")`
+`Pkg.add("Graphs")`
+
+## Modelos sintéticos
+
+Para solamente correr los modelos ejecutar los archivos `run-[topologia].jl`. Si lo que se quiere son las gráficas de promedio de infectados alternando los parametros `r` y `beta` correro `rung-[topologia].jl` CUIDADO: Las gráficas nuevas sobreescriben a las viejas en la carpeta `plots`.
+
 
 En el modelo SIR todos los nodos se inicializan con 0.0 en la probabilidad de
 estár recuperado.
@@ -30,6 +43,8 @@ Hay grafos de muchas cosas disponibles en el siguiente [Link](https://snap.stanf
 
 
 # Importante:
+
+## Esto ya está corregido.
 
 El método para generar grafos small world, de la libreria (watts_strogatz) no es
 determinístico con la seed puesta. Ejemplo:
