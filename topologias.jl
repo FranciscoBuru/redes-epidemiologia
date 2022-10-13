@@ -3,6 +3,7 @@ using Graphs
 
 #https://juliagraphs.org/Graphs.jl/stable/generators/#Graphs.SimpleGraphs.watts_strogatz-Tuple{Integer,%20Integer,%20Real}
 function smallWorld(N::Int64=20, K::Int64=4, beta::Float64=0.4, seed::Int64=1)
+    print(seed)
     return watts_strogatz(N, K, beta, seed=seed)
 end
 
