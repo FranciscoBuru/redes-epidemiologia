@@ -33,10 +33,10 @@ end
 
 calif=x->costoRuta(x, epocas, data, mu, beta, eta, precip)
 
-genes = 100000
+genes = 10000
 println(genes)
 ini = time_ns()
-califFinal, genomaFinal = algoritmoGenetico(calif, "WAC", 100, genes; intStart=1, intEnd=100, random=5)
+califFinal, genomaFinal = algoritmoGenetico(calif, "WAC", 100, genes; intStart=1, intEnd=100, random=9)
 print((time_ns() - ini )/ 1e9)
 print(genomaFinal)
 
