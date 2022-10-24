@@ -13,7 +13,7 @@ epocas = 500        #Iteraciones
 k_reg = 4           #Grado de los vertices.
 proba = 0.1         #Proba de empezar infectado.
 seed = 6
-mallado = 50
+mallado = 10
 
 #Guardamos grafo a tratar.
 #x, y = SIS_regular(NODOS, mu, beta, r, eta, w, epocas, proba, k_reg, seed)
@@ -41,45 +41,17 @@ plt = plot((1:mallado)./mallado, arreb, dpi=300, title="beta-parameter variation
 #savefig(plt, "./plots/R-bVar")
 
 # Variamos r y beta
-#arrerb = ones(mallado*mallado)
-#xx = ones(mallado*mallado)
-#yy = ones(mallado*mallado)
 mtz = zeros((mallado,mallado))
-for i in 1:mallado
-    for ii in 1:mallado
+for i in 1:mallado #beta
+    for ii in 1:mallado #r
         x, y = SIS_regular(NODOS, mu, i/mallado, ii/mallado, eta, w, epocas, proba, k_reg, seed)
-        #arrerb[(i-1)*mallado + ii]=y[2]
-        #xx[(i-1)*mallado + ii] = i/mallado
-        #yy[(i-1)*mallado + ii] = ii/mallado
         mtz[i,ii] = y[2]
     end
 end
-
-#plt = scatter(xx,
-#              yy,
-#              group=arrerb,
-#              dpi=300,
-#              c = :thermal,
-#              camera = (90, 0*round(atand(1 / √2); digits = 3)),
-#              title="beta-r-variation SIS-Regular",
-#              xlabel="beta",
-#              ylabel="r",
-#              zlabel="Infection probability",
-#              leg=false,
-#              xlims=(0,1),
-#              ylims=(0,1),
-#              zlims=(0,1))
-#savefig(plt, "./plots/R-Scatter")
+display(gplot(x))
 gr()
-heatmap(1:mallado, 1:mallado, mtz,
+heatmap(1/mallado:1/mallado:1, 1/mallado:1/mallado:1, mtz,
     c=cgrad([:blue, :white,:red, :yellow]),
-    xlabel="x values", ylabel="y values",
-    title="My title")
+    xlabel="r", ylabel="beta", colorbar_title="Infection Probability")
 
-gr()
-data = rand(21,100)
-heatmap(1:21,
-    1:100, data,
-    c=cgrad([:green, :white,:red]),
-    xlabel="x values", ylabel="y values",
-    title="My title")
+#savefig(plt, "./plots/R-Heatmap")

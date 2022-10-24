@@ -13,7 +13,7 @@ epocas = 500        #Iteraciones
 k_sw = 4            #Grado de los vertices.
 beta_sw = 0.3       #Probabilidad de aristas.
 seed = 6
-mallado = 50
+mallado = 10
 
 
 #Guardamos grafo a tratar.
@@ -42,17 +42,16 @@ plt = plot((1:mallado)./mallado, arreb, dpi=300, title="beta-parameter variation
 savefig(plt, "./plots/WS-bVar")
 
 # Variamos r y beta
-arrerb = ones(mallado*mallado)
-xx = ones(mallado*mallado)
-yy = ones(mallado*mallado)
+mtz = zeros((mallado,mallado))
 for i in 1:mallado
     for ii in 1:mallado
         x, y = SIS_smallWorld(NODOS, mu, i/mallado, ii/mallado, eta, w, epocas, proba, k_sw, beta_sw, seed)
-        arrerb[(i-1)*mallado + ii]=y[2]
-        xx[(i-1)*mallado + ii] = i/mallado
-        yy[(i-1)*mallado + ii] = ii/mallado
+        mtz[i,ii] = y[2]
     end
 end
-display(gplot(x))
-plt = scatter(xx,yy,arrerb,dpi=300, title="beta-r-variation SIS-WattsStrogratz", xlabel="beta", ylabel="r", zlabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1), zlims=(0,1))
-savefig(plt, "./plots/WS-Scatter")
+#display(gplot(x))
+heatmap(1/mallado:1/mallado:1, 1/mallado:1/mallado:1, mtz,
+    c=cgrad([:blue, :white,:red, :yellow]),
+    xlabel="r", ylabel="beta", colorbar_title="Infection Probability")
+#plt = scatter(xx,yy,arrerb,dpi=300, title="beta-r-variation SIS-WattsStrogratz", xlabel="beta", ylabel="r", zlabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1), zlims=(0,1))
+#savefig(plt, "./plots/WS-Heatmap")
