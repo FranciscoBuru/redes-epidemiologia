@@ -14,7 +14,7 @@ n0 = 4              #Nodos del grafo incial.
 k_bar = 4           #Vecinos de cada nodo.
 proba = 0.1         #Proba de empezar infectado.
 seed = 6
-mallado = 10
+mallado = 50
 
 #Guardamos grafo a tratar.
 #x, y = SIS_Barabasi(NODOS, mu, beta, r, eta, w, epocas, proba, n0, k_bar, seed)
@@ -28,7 +28,7 @@ for i in 1:mallado
     #Saco proba infectado
     arrer[i]=y[2]
 end
-plt = plot((1:mallado)./mallado, arrer, dpi=300, title="r-parameter variation in SIS-Barabasi", lw=3, xlabel="r", ylabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1))
+plt = plot((1:mallado)./mallado, arrer, dpi=300, lw=3, xlabel="r", ylabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1))
 savefig(plt, "./plots/BA-rVar")
 
 #Variamos beta
@@ -38,7 +38,7 @@ for i in 1:mallado
     #Saco proba infectado
     arreb[i]=y[2]
 end
-plt = plot((1:mallado)./mallado, arreb, dpi=300, title="beta-parameter variation in SIS-Barabasi", lw=3, xlabel="beta", ylabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1))
+plt = plot((1:mallado)./mallado, arreb, dpi=300, lw=3, xlabel="beta", ylabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1))
 savefig(plt, "./plots/BA-bVar")
 
 # Variamos r y beta
@@ -51,10 +51,10 @@ for i in 1:mallado
 end
 #display(gplot(x))
 gr()
-heatmap(1/mallado:1/mallado:1, 1/mallado:1/mallado:1, mtz,
+plt = heatmap(1/mallado:1/mallado:1, 1/mallado:1/mallado:1, mtz,
     c=cgrad([:blue, :white,:red, :yellow]),
     xlabel="r", ylabel="beta", colorbar_title="Infection Probability")
 
 
-#plt = scatter(xx,yy,arrerb,dpi=300, title="beta-r-variation SIS-Barabasi", xlabel="beta", ylabel="r", zlabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1), zlims=(0,1))
-#savefig(plt, "./plots/BA-Heatmap")
+#plt = scatter(xx,yy,arrerb,dpi=300, xlabel="beta", ylabel="r", zlabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1), zlims=(0,1))
+savefig(plt, "./plots/BA-Heatmap")

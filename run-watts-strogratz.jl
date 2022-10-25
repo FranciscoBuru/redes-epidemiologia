@@ -1,7 +1,7 @@
 include("modelado.jl")
 #using Plots
 
-NODOS = 50          #Cantidad de nodos
+NODOS = 5000          #Cantidad de nodos
 mu = 0.08           #Proba de recuperacion
 beta = 0.23         #Proba de contacto con vecino
 r = 0.7             #Proba de infección por concatco con vecino
