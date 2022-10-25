@@ -54,5 +54,4 @@ plt = heatmap(1/mallado:1/mallado:1, 1/mallado:1/mallado:1, mtz,
     c=cgrad([:blue, :white,:red, :yellow]),
     xlabel="r", ylabel="beta", colorbar_title="Infection Probability")
 #plt = scatter(xx,yy,arrerb,dpi=300, title="beta-r-variation SIS-WattsStrogratz", xlabel="beta", ylabel="r", zlabel="Infection probability", leg=false, xlims=(0,1), ylims=(0,1), zlims=(0,1))
-
 savefig(plt, "./plots/WS-Heatmap")
