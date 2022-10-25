@@ -13,7 +13,7 @@ epocas = 500        #Iteraciones
 k_sw = 4            #Grado de los vertices.
 beta_sw = 0.3       #Probabilidad de aristas.
 seed = 6
-mallado = 10
+mallado = 50
 
 
 #Guardamos grafo a tratar.
