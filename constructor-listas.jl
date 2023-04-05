@@ -34,9 +34,12 @@ function construyeListaNodos(A::Array{Float64,2}, mu::Float64, beta::Array{Float
     arre = Array{NodoSISAjustado}(undef, 4)
     for j in 1:4
         if j == 4
-            arre[j] = NodoSISAjustado(1, 0, mu, beta[j,:], A[j,:], eta, precip[j,:])
+            arre[j] = NodoSISAjustado(1-0.010918231089466657, 0.010918231089466657, mu, beta[j,:], A[j,:], eta, precip[j,:])
+            #arre[j] = NodoSISAjustado(1-0.00000167, 0.00000167, mu, beta[j,:], A[j,:], eta, precip[j,:])
+            #arre[j] = NodoSISAjustado(1, 0, mu, beta[j,:], A[j,:], eta, precip[j,:])
         else
-            arre[j] = NodoSISAjustado(1-0.00000042, 0.00000042, mu, beta[j,:], A[j,:], eta, precip[j,:])
+            arre[j] = NodoSISAjustado(1, 0, mu, beta[j,:], A[j,:], eta, precip[j,:])
+            #arre[j] = NodoSISAjustado(1-0.010918231089466657, 0.010918231089466657, mu, beta[j,:], A[j,:], eta, precip[j,:])
         end
     end
     return arre

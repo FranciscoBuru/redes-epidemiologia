@@ -3,7 +3,7 @@ using Plots
 using Compose
 using Cairo
 
-NODOS = 50          #Cantidad de nodos
+NODOS = 5000          #Cantidad de nodos
 mu = 0.08           #Proba de recuperacion
 beta = 0.23         #Proba de contacto con vecino
 r = 0.7             #Proba de infección por concatco con vecino
@@ -18,8 +18,9 @@ mallado = 50
 
 #Guardamos grafo a tratar.
 x, y = SIS_smallWorld(NODOS, mu, beta, r, eta, w, epocas, proba, k_sw, beta_sw, seed)
-plt = gplot(x)
-draw(PNG("./plots/WS-Graph.png", 16cm, 16cm), gplot(x))
+maximum(broadcast(abs, adjacency_spectrum(x)))
+#plt = gplot(x)
+#draw(PNG("./plots/WS-Graph.png", 16cm, 16cm), gplot(x))
 
 #Variamos r
 arrer = ones(mallado)

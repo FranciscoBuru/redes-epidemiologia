@@ -37,11 +37,23 @@ end
 function etapa(mod::SISAjustado, semana::Integer)
     A = adjacency_matrix(mod.grafo)
     N = length(mod.nodos)
+    sem = semana
+    if (semana > 52 && semana<=104)
+            sem = semana-52;
+    end
     Threads.@threads for j in 1:N
         mod.nodos[j].eta = 1
         for jj in 1:N
             if(A[j,jj] == 1 || j==jj)
+                # Lluvia y beta del año
                 mod.nodos[j].eta = mod.nodos[j].eta*(1-(mod.nodos[j].precip[Int(floor(semana/4.333333)+1)]*mod.nodos[j].r[jj]*mod.nodos[j].beta[Int(floor(semana/52)+1)]*mod.nodos[jj].i))
+                #Luvia del año
+                #mod.nodos[j].eta = mod.nodos[j].eta*(1-(mod.nodos[j].precip[Int(floor(semana/4.333333)+1)]*mod.nodos[j].r[jj]*mod.nodos[j].beta[1]*mod.nodos[jj].i))
+                #Beta del año
+                #mod.nodos[j].eta = mod.nodos[j].eta*(1-(mod.nodos[j].precip[Int(floor(sem/4.333333)+1)]*mod.nodos[j].r[jj]*mod.nodos[j].beta[Int(floor(semana/52)+1)]*mod.nodos[jj].i))
+                #Solo los pasados
+                #mod.nodos[j].eta = mod.nodos[j].eta*(1-(mod.nodos[j].precip[Int(floor(sem/4.333333)+1)]*mod.nodos[j].r[jj]*mod.nodos[j].beta[1]*mod.nodos[jj].i))
+
             end
         end
     end

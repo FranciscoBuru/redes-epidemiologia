@@ -1,7 +1,7 @@
 include("modelado.jl")
 using Plots
 
-NODOS = 5000          #Cantidad de nodos
+NODOS = 10000         #Cantidad de nodos
 mu = 0.08           #Proba de recuperacion
 beta = 0.23         #Proba de contacto con vecino
 r = 0.7             #Proba de infección por concatco con vecino
@@ -16,6 +16,7 @@ seed = 6
 x,y = SIS_Barabasi(NODOS, mu, beta, r, eta, w, epocas, proba, n0, k_bar, seed)
 # y tiene: (promedio sus, promedio inf, suma de promedios (siempre 1))
 #SIR_Barabasi(NODOS, mu, beta, r, eta, w, epocas, proba, n0, k_bar, seed)
+maximum(broadcast(abs, adjacency_spectrum(x)))
 
 plt = gplot(x)
 draw(PNG("./plots/BA-Graph-50.png", 16cm, 16cm), gplot(x))

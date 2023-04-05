@@ -11,7 +11,7 @@ beta = [0.231857 0.427434 0.010000 0.558327 0.221011 0.294170;
         0.576013 0.596109 0.568935 0.010000 0.169991 0.356684] #5
 
 # Datos de casos
-data = readdlm("./data.txt")
+data = readdlm("./datosNorm.txt")
 
 #Precipitacion primer anio
 precip = [0.24940130 0.13479302 0.15121451 0.18918919 0.64762231 0.80465275 0.76565173 0.55319877 1.00000000 0.83099555 0.27129661 0.14471433 0.03838534;
@@ -20,7 +20,7 @@ precip = [0.24940130 0.13479302 0.15121451 0.18918919 0.64762231 0.80465275 0.76
           0.23616089 0.13898845 0.28793309 0.29669454 0.59418558 1.00000000 0.61967344 0.78733572 0.88410992 0.79291119 0.28474711 0.22182397 0.14065282]
 
 epocas = 52    # Numero de semanas a ver. 52 es de 1 anio.
-mu = 0.1428     # Probabilidad de recuperacion.
+mu = 0.1667     # Probabilidad de recuperacion.
 eta=0.0         # Probabilidad de no contagio por interaccion con vecinos.
 
 #Precipitacion tiempo completo
@@ -39,35 +39,37 @@ eta=0.0         # Probabilidad de no contagio por interaccion con vecinos.
 #writedlm("200k", M)
 
 
-puntos = 500000
+puntos = 1000000
 arre = ones(puntos)
-M = hit_and_run(puntos)
-writedlm("./puntos/500k", M)
-#M = readdlm("./puntos/5k")
-for q in 1:puntos
+#M = hit_and_run(puntos)
+#writedlm("./puntos/1M", M)
+M = readdlm("./puntos/1M")
+Threads.@threads for q in 1:puntos
     A = [M[q,1] 0 M[q,2] M[q,3]; 0 M[q,4] M[q,5] 0; M[q,6] M[q,7] M[q,8] M[q,9]; M[q,10] 0 M[q,11] M[q,12]]
+    #A = [M[q,1] 0 M[q,2] 0; 0 M[q,4] M[q,5] 0; M[q,6] M[q,7] M[q,8] 0; 0 0 0 0]
     A = convert(Array{Float64,2}, A)
     arre[q], kk, kk2  = grafo_mexico(A, epocas, data, mu, beta, eta, precip,0)
 end
 
 findmin(arre)
-min = findmin(arre)[2]
-min = 40562
-print(M[min,:])
-#writedlm("./minimos/min1Mmax", M[min,:])
+mini = findmin(arre)[2]
+#min = 40562
+print(M[mini,:])
+writedlm("./minimos/min1MTotNorm", M[mini,:])
 
 
-nuevos = M[min,:]
-
+nuevos = M[mini,:]
+#nuevos = [0.76602644, 0.9470777, 0.16576109, 0.18036692, 0.047499037, 0.22393158, 0.99259794, 0.9127499, 0.019398691, 0.78759634, 0.91384923, 0.48357782]
 A = [nuevos[1] 0 nuevos[2] nuevos[3]; 0 nuevos[4] nuevos[5] 0; nuevos[6] nuevos[7] nuevos[8] nuevos[9]; nuevos[10] 0 nuevos[11] nuevos[12]]
+#A = [nuevos[1] 0 nuevos[2] 0; 0 nuevos[4] nuevos[5] 0; nuevos[6] nuevos[7] nuevos[8] 0; 0 0 0 0]
 A = convert(Array{Float64,2}, A)
 #A = [0.31 0.00 0.13 0.93; 0.0 0.99 0.99 0.0; 0.60 0.99 0.20 0.90; 0.38 0.0 0.2 0.92]
+include("modelado.jl")
 diff, mtz, arreDifs = grafo_mexico(A, epocas, data, mu, beta, eta, precip,0)
-diff, errInd, arreDifs = grafo_mexico(A, epocas, data, mu, beta, eta, precip, 1)
+#diff, errInd, arreDifs = grafo_mexico(A, epocas, data, mu, beta, eta, precip, 0)
 
 
 ## Seccion para error por estado dado un punto minimo
-x = 1:(epocas-1); y = errInd[1:(epocas-1)] # These are the plotting data
 p1=plot(x, y, title="Chiapas", legend = false)
 
 #Col2
@@ -115,4 +117,6 @@ plot(x, y, legend = false)
 yy = data[3*floor(Int, length(data)/4)+1:3*floor(Int, length(data)/4 +1)+(epocas-4)]
 p4=plot!(x, yy,title = "Veracruz", legend = false)
 
-plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
+plt = plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
+
+savefig(plt, "./plots/1M-TOT-NORM.png")

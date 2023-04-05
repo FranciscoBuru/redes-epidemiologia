@@ -3,7 +3,7 @@ using Plots
 using Compose
 using Cairo
 
-NODOS = 50          #Cantidad de nodos
+NODOS = 500          #Cantidad de nodos
 mu = 0.08           #Proba de recuperacion
 beta = 0.23         #Proba de contacto con vecino
 r = 0.7             #Proba de infección por concatco con vecino
@@ -17,9 +17,12 @@ seed = 6
 mallado = 50
 
 #Guardamos grafo a tratar.
-#x, y = SIS_Barabasi(NODOS, mu, beta, r, eta, w, epocas, proba, n0, k_bar, seed)
+x, y = SIS_Barabasi(NODOS, mu, beta, r, eta, w, epocas, proba, n0, k_bar, seed)
 #plt = gplot(x)
 #draw(PNG("./plots/BA-Graph.png", 16cm, 16cm), gplot(x))
+maximum(broadcast(abs, adjacency_spectrum(x)))
+#WW = adjacency_matrix(x[, T=Int; dir=:out])
+#eigvals(adjacency_matrix(WW; permute::Bool=true, scale::Bool=true, sortby)
 
 #Variamos r
 arrer = ones(mallado)

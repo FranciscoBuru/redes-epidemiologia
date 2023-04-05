@@ -5,9 +5,9 @@ include("modelo.jl")
 
 mutable struct NodoSIS
     s::Float64      #Proba de estar suceptible
-    i::Float64      #Proba de estar infectaod
+    i::Float64      #Proba de estar infectado
     mu::Float64     #Proba de recuperación
-    beta::Float64   #Proba por contacto con vecino
+    beta::Float64   #Proba de infeccion por contacto con vecino
     r::Float64      #Proba de contacto con vecino
     eta::Float64    #Proba de no contagio por interacción con todos los vecinos
     #auxiliares
@@ -53,7 +53,7 @@ function etapa(mod::SIS)
         mod.nodos[j].s = mod.nodos[j].saux
     end
     return mod
-    end
+end
 
 function probas(mod::SIS)
     n = length(mod.nodos)

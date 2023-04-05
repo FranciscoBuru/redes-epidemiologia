@@ -19,8 +19,8 @@ function corre_modelo(modelo::Modelo, datos::Array{Float64,2}, epocas::Integer, 
             arre[i,:] = valoresActuales(modelo)
 
             #Error absoluto
-            difs[i] = abs(sum(datos[i,:] .- arre[i,:]))
-
+            #difs[i] = abs(sum(datos[i,:] .- arre[i,:]))
+            difs[i] = sum(broadcast(abs, datos[i,:] .- arre[i,:]))
             #Error porcentual
             #difs[i] = abs(sum((datos[i,:] .- arre[i,:])./datos[i,:]))
             #difs[i] = difs[i]/sum(datos[i,:])
