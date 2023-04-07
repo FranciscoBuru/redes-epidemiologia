@@ -21,3 +21,19 @@ end
 function mexico()
     return SimpleGraph([0 0 1 1; 0 0 1 0; 1 1 0 1; 1 0 1 0])
 end
+
+using Random
+using StatsBase
+using GraphPlot
+using Compose
+using Cairo
+
+x = regular(6, 4)
+display(gplot(x))
+draw(PNG("./plots/R-chica.png", 16cm, 16cm), gplot(x))
+x = smallWorld(6,4,0.4)
+display(gplot(x))
+draw(PNG("./plots/SW-chica.png", 16cm, 16cm), gplot(x))
+x = barabasi(8,2,2)
+display(gplot(x))
+draw(PNG("./plots/BAR-chica.png", 16cm, 16cm), gplot(x))

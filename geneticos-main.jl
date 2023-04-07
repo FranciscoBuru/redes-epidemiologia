@@ -63,7 +63,7 @@ sjahdfg, mtz, arreDifs = grafo_mexico(A, epocas, data, mu, beta, eta, precip, 0)
 x = 1:(epocas-1); y = mtz[1:(epocas-1)] # These are the plotting data
 y[1:52] = (y[1:52] .- minimum(y[1:52]))/(maximum(y[1:52])-minimum(y[1:52]))
 y[53:104] = (y[53:104] .- minimum(y[53:104]))/(maximum(y[53:104])-minimum(y[53:104]))
-#y[105:155] = (y[105:155] .- minimum(y[105:155]))/(maximum(y[105:155])-minimum(y[105:155]))
+y[105:155] = (y[105:155] .- minimum(y[105:155]))/(maximum(y[105:155])-minimum(y[105:155]))
 plot(x, y, legend = false)
 yy = data[1:(epocas-1)]
 p1=plot!(1:(epocas-1),yy, title = "Chiapas", legend = false)
@@ -72,7 +72,7 @@ p1=plot!(1:(epocas-1),yy, title = "Chiapas", legend = false)
 x = 1:(epocas-1); y = mtz[(epocas+1):(2*epocas-1)] # These are the plotting data
 y[1:52] = (y[1:52] .- minimum(y[1:52]))/(maximum(y[1:52])-minimum(y[1:52]))
 y[53:104] = (y[53:104] .- minimum(y[53:104]))/(maximum(y[53:104])-minimum(y[53:104]))
-#y[105:155] = (y[105:155] .- minimum(y[105:155]))/(maximum(y[105:155])-minimum(y[105:155]))
+y[105:155] = (y[105:155] .- minimum(y[105:155]))/(maximum(y[105:155])-minimum(y[105:155]))
 y = (y .- minimum(y))/(maximum(y)-minimum(y))
 plot(x, y, legend = false)
 yy = data[floor(Int, length(data)/4 +1):floor(Int, length(data)/4 +1)+(epocas-2)]
@@ -100,4 +100,4 @@ p4=plot!(x, yy,title = "Veracruz", legend = false)
 
 plt = plot(p1, p2, p3, p4, layout = (2, 2), legend = false)
 
-savefig(plt, "./plots/AS-nada.png")
+savefig(plt, "./plots/3-anios-ajustados-todo-dejando-ceros.png")
